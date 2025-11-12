@@ -1,0 +1,7 @@
+<nav style="background:#157bce; padding:10px; text-align:center;">
+  <a href="index.html" style="color:white; margin:0 12px; text-decoration:none;">Home</a>
+  <a href="spiders.html" style="color:white; margin:0 12px; text-decoration:none;">Spiders</a>
+  <a href="music.html" style="color:white; margin:0 12px; text-decoration:none;">Music</a>
+  <a href="fossils.html" style="color:white; margin:0 12px; text-decoration:none;">Fossils</a>
+  <a href="indigenous.html" style="color:white; margin:0 12px; text-decoration:none;">Indigenous</a>
+</nav>
