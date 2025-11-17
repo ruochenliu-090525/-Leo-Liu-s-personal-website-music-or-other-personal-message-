@@ -1,59 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Leo Liu's Personal Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* ======= 基础（浅色）背景风格 ======= */
+    :root{
+      --accent-1: #4fd4ff;
+      --accent-2: #9efff5;
+      --text-dark: #0a3f80;
+      --muted: #014866;
+      --card-bg: rgba(255,255,255,0.92);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :root { --reduced-motion: 1; }
+    }
     body {
-      background: #e3f6fd; /* 淡海蓝 */
+      background: radial-gradient(circle at top, #e3f6fd 0%, #d6eaff 45%, #c4daf8 100%);
       font-family: 'Segoe UI', 'Arial', sans-serif;
       margin: 0;
       padding: 0 0 40px 0;
       color: #222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
     .container {
       max-width: 700px;
       margin: 40px auto;
-      background: rgba(255,255,255,0.85);
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      padding: 32px 24px;
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+      padding: 32px 28px 36px;
     }
+
+    /* ======= 霓虹主标题 ======= */
     h1 {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 24px;
+      font-size: 2.4em;
+      letter-spacing: 0.03em;
+      color: var(--text-dark);
+      text-shadow:
+        0 0 14px rgba(140,220,255,0.95),
+        0 0 34px rgba(120,210,255,0.55);
     }
+
     h2 {
       font-size: 1.4em;
       color: #157bce;
       margin-top: 32px;
       margin-bottom: 10px;
     }
+
     .section {
       margin-bottom: 22px;
     }
+
+    /* ======= 霓虹小标题 + 下划线条 ======= */
     .emoji-title {
-      font-size: 1.28em;
+      display: block;
+      font-size: 1.35em;
       font-weight: bold;
-      color: #1268a5;
-      margin-right: 6px;
+      color: #0c4f9f;
+      margin: 26px 0 10px;
+      position: relative;
+      padding-bottom: 6px;
     }
+    .emoji-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 110%;
+      max-width: 360px;
+      background: linear-gradient(90deg, #59d6ff, #aefaff);
+      box-shadow: 0 0 12px rgba(89,214,255,0.85);
+      border-radius: 999px;
+    }
+
     a {
       color: #1d62f0;
       word-break: break-all;
     }
+
     .contact-block {
       margin-top: 28px;
       padding: 12px 16px;
       background: #dbf0fa;
-      border-radius: 8px;
-      color: #014866;
+      border-radius: 10px;
+      color: var(--muted);
+    }
+
+    /* ======= 顶部科幻滚动进度条 ======= */
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      box-shadow: 0 0 18px rgba(105,230,255,0.95);
+      z-index: 998;
+      /* 平滑宽度变化（如果用户没有 reduced-motion） */
+      transition: width 180ms linear;
+    }
+
+    /* ======= 深色模式（科技深蓝风） ======= */
+    body.dark {
+      background: radial-gradient(circle at top, #193a6f 0%, #050b18 55%, #01030a 100%);
+      color: #e8f1ff;
+    }
+    body.dark .container {
+      background: rgba(8, 20, 45, 0.94);
+      color: #e8f1ff;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.75);
+    }
+    body.dark h1 {
+      color: #b9e7ff;
+      text-shadow:
+        0 0 18px rgba(146,230,255,0.98),
+        0 0 42px rgba(90,200,255,0.7);
+    }
+    body.dark .emoji-title {
+      color: #c3e9ff;
+    }
+    body.dark .emoji-title::after {
+      background: linear-gradient(90deg, #73e3ff, #c5ffea);
+      box-shadow: 0 0 16px rgba(115,227,255,1);
+    }
+    body.dark a {
+      color: #9cd3ff;
+    }
+    body.dark .contact-block {
+      background: rgba(20, 50, 85, 0.9);
+      color: #d5e9ff;
+    }
+    body.dark #progressBar {
+      box-shadow: 0 0 20px rgba(120,235,255,1);
+    }
+
+    /* ======= 深色模式切换按钮 ======= */
+    #darkToggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      padding: 10px 16px;
+      background: #157bce;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      transition: transform 180ms ease, background 180ms ease;
+      z-index: 999;
+    }
+    #darkToggle:hover {
+      transform: scale(1.06) translateY(-1px);
+      background: #0f6cb5;
+    }
+    /* 焦点可见性（键盘导航友好） */
+    #darkToggle:focus {
+      outline: 3px solid rgba(79,212,255,0.22);
+      outline-offset: 4px;
+    }
+
+    /* Reduced motion - 减少动画和发光效果 */
+    @media (prefers-reduced-motion: reduce) {
+      #progressBar { transition: none; }
+      #darkToggle { transition: none; transform: none; }
+      h1, .emoji-title::after { text-shadow: none; box-shadow: none; }
+    }
+
+    /* small screens */
+    @media (max-width: 520px) {
+      .container { margin: 20px 12px; padding: 24px 18px; }
+      h1 { font-size: 1.9em; }
+      .emoji-title { font-size: 1.15em; margin: 18px 0 8px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- 顶部滚动进度条 -->
+  <div id="progressBar" aria-hidden="true"></div>
+
+  <!-- 深色模式切换按钮 (aria-pressed 显示当前状态) -->
+  <button id="darkToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+
+  <div class="container" id="mainContent">
     <h1>Leo Liu's Personal Website</h1>
 
     <div class="section">
@@ -115,10 +252,93 @@
     <div class="contact-block">
       <span class="emoji-title">📫 Contact</span>
       <p>
-        If you’re into biology, music, or just weird and wonderful creatures — let’s connect!<br>
+        If you’re into biology, music, or just weird and wonderful creatures — let’s connect!<br />
         📧 <strong>Email:</strong> <a href="mailto:liuruochen525@gmail.com">liuruochen525@gmail.com</a>
       </p>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("darkToggle");
+      const bar = document.getElementById("progressBar");
+      const storageKey = "prefers-dark-mode";
+
+      // 初始化：优先 localStorage -> prefers-color-scheme -> 默认 light
+      function initTheme() {
+        const stored = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const useDark = stored === "true" ? true : (stored === "false" ? false : prefersDark);
+        if (useDark) document.body.classList.add("dark");
+        updateButton();
+      }
+
+      function updateButton() {
+        const isDark = document.body.classList.contains("dark");
+        btn.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+        btn.setAttribute("aria-pressed", String(isDark));
+      }
+
+      // 切换主题并持久化选择
+      btn.addEventListener("click", () => {
+        const willDark = !document.body.classList.contains("dark");
+        document.body.classList.toggle("dark", willDark);
+        localStorage.setItem(storageKey, String(willDark));
+        updateButton();
+      });
+
+      // 监听系统主题变化（若用户没有手动覆盖 localStorage，则响应系统变化）
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        mq.addEventListener && mq.addEventListener('change', (e) => {
+          const stored = localStorage.getItem(storageKey);
+          if (stored === null) { // 仅在用户未手动选择时跟随系统
+            document.body.classList.toggle("dark", e.matches);
+            updateButton();
+          }
+        });
+      }
+
+      // 滚动进度条，节流以降低频率
+      let ticking = false;
+      function onScroll() {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          // 如果用户首选减少动画，简单更新宽度不做过渡
+          const doc = document.documentElement;
+          const scrollTop = doc.scrollTop || document.body.scrollTop;
+          const scrollHeight = doc.scrollHeight - doc.clientHeight;
+          const percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+          bar.style.width = percent + "%";
+          return;
+        }
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const doc = document.documentElement;
+            const scrollTop = doc.scrollTop || document.body.scrollTop;
+            const scrollHeight = doc.scrollHeight - doc.clientHeight;
+            const percent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+            bar.style.width = percent + "%";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // 首次初始化
+      initTheme();
+      // 首次触发一次滚动条位置
+      onScroll();
+    })();
+  </script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
